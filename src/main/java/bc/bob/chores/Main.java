@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
  * @author bob
  */
 public class Main extends javax.swing.JFrame {
+    
+    private final ChineseGuy chineseGuy = new ChineseGuy();
 
     /**
      * Creates new form Main
@@ -31,13 +33,13 @@ public class Main extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonTimeTrackerToggle = new javax.swing.JButton();
+        jButtonTimeTrackerStart1Cycle = new javax.swing.JButton();
+        jButtonTimeTrackerStart2Cycles = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jSliderTimeTrackerDuration = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldTimeTrackerOutput = new javax.swing.JTextField();
         jLabelTimeTrackerDuration = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -54,19 +56,41 @@ public class Main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabelChineseGuyDuration = new javax.swing.JLabel();
         jButtonEbulateTab = new javax.swing.JButton();
+        jButtonChineseGuyStop = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jButtonServerBlackout = new javax.swing.JButton();
+        jButtonGlobalBlackout = new javax.swing.JButton();
+        jButtonShutdownNas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Chores");
 
         jPanel1.setBackground(java.awt.Color.lightGray);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel1.setText("Time tracker");
 
-        jButton1.setText("Toggle");
+        jButtonTimeTrackerToggle.setText("Toggle");
+        jButtonTimeTrackerToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTimeTrackerToggleActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Start cycle");
+        jButtonTimeTrackerStart1Cycle.setText("Start cycle");
+        jButtonTimeTrackerStart1Cycle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTimeTrackerStart1CycleActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Start 2 cycles");
+        jButtonTimeTrackerStart2Cycles.setText("Start 2 cycles");
+        jButtonTimeTrackerStart2Cycles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTimeTrackerStart2CyclesActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Cycle time (min):");
 
@@ -80,6 +104,8 @@ public class Main extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Output:");
+
+        jTextFieldTimeTrackerOutput.setEditable(false);
 
         jLabelTimeTrackerDuration.setText("240");
 
@@ -95,15 +121,15 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jButtonTimeTrackerStart1Cycle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                                        .addComponent(jButtonTimeTrackerToggle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton3))
+                                    .addComponent(jButtonTimeTrackerStart2Cycles))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1))
+                                        .addComponent(jTextFieldTimeTrackerOutput))
                                     .addComponent(jSliderTimeTrackerDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -121,11 +147,11 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jButtonTimeTrackerToggle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButtonTimeTrackerStart1Cycle)
+                    .addComponent(jButtonTimeTrackerStart2Cycles))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -135,7 +161,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTimeTrackerOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -237,6 +263,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jButtonChineseGuyStop.setText("■");
+        jButtonChineseGuyStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChineseGuyStopActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -255,7 +288,9 @@ public class Main extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jButtonEbulateScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonEbulateTab, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButtonEbulateTab, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonChineseGuyStop, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -273,7 +308,8 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonEbulateScroll)
-                    .addComponent(jButtonEbulateTab))
+                    .addComponent(jButtonEbulateTab)
+                    .addComponent(jButtonChineseGuyStop))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -283,6 +319,63 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel4.setBackground(java.awt.Color.lightGray);
+
+        jLabel8.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel8.setText("Blackout");
+
+        jButtonServerBlackout.setText("Server blackout");
+        jButtonServerBlackout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonServerBlackoutActionPerformed(evt);
+            }
+        });
+
+        jButtonGlobalBlackout.setText("Global blackout");
+        jButtonGlobalBlackout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGlobalBlackoutActionPerformed(evt);
+            }
+        });
+
+        jButtonShutdownNas.setText("Shutdown NAS");
+        jButtonShutdownNas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonShutdownNasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonServerBlackout)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonGlobalBlackout)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonShutdownNas, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(jLabel8)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonServerBlackout)
+                    .addComponent(jButtonGlobalBlackout)
+                    .addComponent(jButtonShutdownNas))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -290,10 +383,12 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -304,8 +399,11 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 20, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         pack();
@@ -326,13 +424,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPrepareReportActionPerformed
 
     private void jButtonEbulateScrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEbulateScrollActionPerformed
-        ChineseGuy chineseGuy = new ChineseGuy();
-        chineseGuy.emulateScrolling();
+        this.chineseGuy.emulateScrollingAsThread();
     }//GEN-LAST:event_jButtonEbulateScrollActionPerformed
 
     private void jButtonEbulateTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEbulateTabActionPerformed
-        ChineseGuy chineseGuy = new ChineseGuy();
-        chineseGuy.emulateTabbing();
+        this.chineseGuy.emulateTabbingAsThread();
     }//GEN-LAST:event_jButtonEbulateTabActionPerformed
 
     private void jSliderTimeTrackerDurationStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderTimeTrackerDurationStateChanged
@@ -342,6 +438,43 @@ public class Main extends javax.swing.JFrame {
     private void jSliderChineseGuyDurationStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderChineseGuyDurationStateChanged
         this.jLabelChineseGuyDuration.setText(String.valueOf(jSliderChineseGuyDuration.getValue()));;
     }//GEN-LAST:event_jSliderChineseGuyDurationStateChanged
+
+    private void jButtonChineseGuyStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChineseGuyStopActionPerformed
+        this.chineseGuy.stop();
+    }//GEN-LAST:event_jButtonChineseGuyStopActionPerformed
+
+    private void jButtonTimeTrackerToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTimeTrackerToggleActionPerformed
+        
+    }//GEN-LAST:event_jButtonTimeTrackerToggleActionPerformed
+
+    private void jButtonTimeTrackerStart1CycleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTimeTrackerStart1CycleActionPerformed
+        
+    }//GEN-LAST:event_jButtonTimeTrackerStart1CycleActionPerformed
+
+    private void jButtonTimeTrackerStart2CyclesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTimeTrackerStart2CyclesActionPerformed
+        
+    }//GEN-LAST:event_jButtonTimeTrackerStart2CyclesActionPerformed
+
+    private void jButtonServerBlackoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonServerBlackoutActionPerformed
+        Blackout blackout = new Blackout();
+        if(!blackout.serverBlackout()) {
+            JOptionPane.showMessageDialog(null, "Failed to server blackout!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonServerBlackoutActionPerformed
+
+    private void jButtonGlobalBlackoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGlobalBlackoutActionPerformed
+        Blackout blackout = new Blackout();
+        if(!blackout.gloablBlackout()) {
+            JOptionPane.showMessageDialog(null, "Failed to global blackout!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonGlobalBlackoutActionPerformed
+
+    private void jButtonShutdownNasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShutdownNasActionPerformed
+        Blackout blackout = new Blackout();
+        if(!blackout.shoutdownNas()) {
+            JOptionPane.showMessageDialog(null, "Failed to NAS shutdown!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonShutdownNasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -379,12 +512,16 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonChineseGuyStop;
     private javax.swing.JButton jButtonEbulateScroll;
     private javax.swing.JButton jButtonEbulateTab;
+    private javax.swing.JButton jButtonGlobalBlackout;
     private javax.swing.JButton jButtonPrepareReport;
+    private javax.swing.JButton jButtonServerBlackout;
+    private javax.swing.JButton jButtonShutdownNas;
+    private javax.swing.JButton jButtonTimeTrackerStart1Cycle;
+    private javax.swing.JButton jButtonTimeTrackerStart2Cycles;
+    private javax.swing.JButton jButtonTimeTrackerToggle;
     private javax.swing.JCheckBox jCheckBoxReportForYesterday;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -393,16 +530,18 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelChineseGuyDuration;
     private javax.swing.JLabel jLabelTimeTrackerDuration;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSliderChineseGuyDuration;
     private javax.swing.JSlider jSliderTimeTrackerDuration;
     private javax.swing.JTextArea jTextAreaReportText;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldTimeTrackerOutput;
     // End of variables declaration//GEN-END:variables
 }

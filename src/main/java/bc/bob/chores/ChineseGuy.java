@@ -19,10 +19,35 @@ public class ChineseGuy {
 
     private static final Logger LOG = Logger.getLogger(ChineseGuy.class.getName());
 
+    private volatile boolean stopped = false;
+
+    /**
+     * Stop thread.
+     */
+    public void stop() {
+        stopped = true;
+    }
+
+    void emulateScrollingAsThread() {
+        this.stopped = false;
+        
+        Thread scrollingThread = new Thread(() -> {
+            emulateScrolling();
+        }, "ChineseGuy-Tabbing");
+        scrollingThread.start();
+    }
+
     void emulateScrolling() {
+        System.out.println("Start Chinese guy to scrolling.");
         try {
             AdvRobot advRobot = new AdvRobot();
             while (true) {
+                // Terminate thread.
+                if (stopped) {
+                    System.out.println("Stop Chinese guy to scrolling.");
+                    break;
+                }
+
                 int ms = Utils.generateRandomInteger(200, 1500);
                 Utils.sleep(ms);
                 switch (Utils.generateRandomInteger(1, 4)) {
@@ -57,10 +82,26 @@ public class ChineseGuy {
         }
     }
 
+    void emulateTabbingAsThread() {
+        this.stopped = false;
+        
+        Thread tabbingThread = new Thread(() -> {
+            emulateTabbing();
+        }, "ChineseGuy-Tabbing");
+        tabbingThread.start();
+    }
+
     void emulateTabbing() {
+        System.out.println("Start Chinese guy to tabbing.");
         try {
             AdvRobot advRobot = new AdvRobot();
             while (true) {
+                // Terminate thread.
+                if (stopped) {
+                    System.out.println("Stop Chinese guy to tabbing.");
+                    break;
+                }
+
                 int ms = Utils.generateRandomInteger(200, 1500);
                 Utils.sleep(ms);
                 switch (Utils.generateRandomInteger(1, 8)) {
