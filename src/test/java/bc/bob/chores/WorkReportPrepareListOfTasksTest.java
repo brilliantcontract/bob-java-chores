@@ -5,13 +5,12 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class WorkReportTest {
+public class WorkReportPrepareListOfTasksTest {
 
     @Test
     public void prepareReportExtractsCompletedTasks() {
         // Initialization.
         final WorkReport workReport = new WorkReport();
-        final Boolean enabled = Boolean.TRUE;
         final String originalReportText = "Activity:\n"
                 + "Sep 24 ‧ Yesterday ‧ Wednesday\n\n"
                 + "    Bob\n\n"
@@ -44,7 +43,7 @@ public class WorkReportTest {
                 + "- Send report to Anthony";
 
         // Execution.
-        final String updatedReport = workReport.prepareReport(enabled, originalReportText);
+        final String updatedReport = workReport.prepareListOfTasks(originalReportText);
 
         // Assertion.
         assertThat(updatedReport, is(expectedReport));

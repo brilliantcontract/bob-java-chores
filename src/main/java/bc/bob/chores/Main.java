@@ -5,6 +5,8 @@
  */
 package bc.bob.chores;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bob
@@ -47,10 +49,11 @@ public class Main extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        jButtonEbulateScroll = new javax.swing.JButton();
         jSliderChineseGuyDuration = new javax.swing.JSlider();
         jLabel9 = new javax.swing.JLabel();
         jLabelChineseGuyDuration = new javax.swing.JLabel();
+        jButtonEbulateTab = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,10 +73,15 @@ public class Main extends javax.swing.JFrame {
         jSliderTimeTrackerDuration.setMaximum(360);
         jSliderTimeTrackerDuration.setMinimum(60);
         jSliderTimeTrackerDuration.setValue(240);
+        jSliderTimeTrackerDuration.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSliderTimeTrackerDurationStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("Output:");
 
-        jLabelTimeTrackerDuration.setText("0");
+        jLabelTimeTrackerDuration.setText("240");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,15 +210,32 @@ public class Main extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel7.setText("Chinese guy");
 
-        jButton4.setText("List");
+        jButtonEbulateScroll.setText("Scroll");
+        jButtonEbulateScroll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEbulateScrollActionPerformed(evt);
+            }
+        });
 
         jSliderChineseGuyDuration.setMaximum(60);
         jSliderChineseGuyDuration.setMinimum(10);
         jSliderChineseGuyDuration.setValue(35);
+        jSliderChineseGuyDuration.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSliderChineseGuyDurationStateChanged(evt);
+            }
+        });
 
         jLabel9.setText("Duration (min):");
 
-        jLabelChineseGuyDuration.setText("0");
+        jLabelChineseGuyDuration.setText("35");
+
+        jButtonEbulateTab.setText("Tab");
+        jButtonEbulateTab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEbulateTabActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -218,6 +243,9 @@ public class Main extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jSliderChineseGuyDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -225,11 +253,10 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jLabel7))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jSliderChineseGuyDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButtonEbulateScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonEbulateTab, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
@@ -244,7 +271,9 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEbulateScroll)
+                    .addComponent(jButtonEbulateTab))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -284,9 +313,35 @@ public class Main extends javax.swing.JFrame {
 
     private void jButtonPrepareReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrepareReportActionPerformed
         WorkReport workReport = new WorkReport();
-        String updatedReport = workReport.prepareReport(jCheckBoxReportForYesterday.isEnabled(), jTextAreaReportText.getText());
+
+        String originalReportText = workReport.fetchClipboardText();
+        if (!workReport.validateTextInClipboard(originalReportText)) {
+            return;
+        }
+
+        String updatedReport = workReport.prepareReport(jCheckBoxReportForYesterday.isSelected(), originalReportText);
         jTextAreaReportText.setText(updatedReport);
+        
+        workReport.saveReportToClipboard(updatedReport);
     }//GEN-LAST:event_jButtonPrepareReportActionPerformed
+
+    private void jButtonEbulateScrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEbulateScrollActionPerformed
+        ChineseGuy chineseGuy = new ChineseGuy();
+        chineseGuy.emulateScrolling();
+    }//GEN-LAST:event_jButtonEbulateScrollActionPerformed
+
+    private void jButtonEbulateTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEbulateTabActionPerformed
+        ChineseGuy chineseGuy = new ChineseGuy();
+        chineseGuy.emulateTabbing();
+    }//GEN-LAST:event_jButtonEbulateTabActionPerformed
+
+    private void jSliderTimeTrackerDurationStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderTimeTrackerDurationStateChanged
+        this.jLabelTimeTrackerDuration.setText(String.valueOf(jSliderTimeTrackerDuration.getValue()));
+    }//GEN-LAST:event_jSliderTimeTrackerDurationStateChanged
+
+    private void jSliderChineseGuyDurationStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderChineseGuyDurationStateChanged
+        this.jLabelChineseGuyDuration.setText(String.valueOf(jSliderChineseGuyDuration.getValue()));;
+    }//GEN-LAST:event_jSliderChineseGuyDurationStateChanged
 
     /**
      * @param args the command line arguments
@@ -327,7 +382,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonEbulateScroll;
+    private javax.swing.JButton jButtonEbulateTab;
     private javax.swing.JButton jButtonPrepareReport;
     private javax.swing.JCheckBox jCheckBoxReportForYesterday;
     private javax.swing.JLabel jLabel1;
